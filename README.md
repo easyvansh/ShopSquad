@@ -14,7 +14,7 @@ Work Done:
 - Store Products on Firestore Database
 - State Management with Redux Toolkit for Backend Functionality
 - Payment Handling using Stripe Integration and Redux Queries
-- [Deployed Server][https://shop-squad-api.onrender.com] on render.com
+- Deployed [Server](https://shop-squad-api.onrender.com) on render.com
 
 Currently Working On:
 
