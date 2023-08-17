@@ -10,6 +10,11 @@ import { useSelector } from "react-redux";
 import { selectNumberOfItems } from "./app/store/cartSlice";
 import TrackOrder from "./app/screens/TrackOrder";
 
+import Login from './app/screens/Login/Login';
+import Signup from './app/screens/Login/Signup'
+import ForgotPassword from './app/screens/Login/ForgotPassword';
+import Main from './app/screens/Login/Main';
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
@@ -19,6 +24,11 @@ const AppNavigator = () => {
       <Stack.Navigator
         screenOptions={{ contentStyle: { backgroundColor: "white" },showHeader: false}}
       >
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Main" component={Main} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+    
         <Stack.Screen
           name="Home"
           component={HomePage}
