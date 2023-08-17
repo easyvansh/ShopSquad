@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// const baseUrl = "https://shop-squad-api.onrender.com/";
-const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://shop-squad-api.onrender.com/";
+
 
 // Define a service using a base URL and expected endpoints
 export const apiSlice = createApi({

@@ -67,9 +67,6 @@ function Signup({ navigation }) {
         `Your order reference is: ${result.data.data.ref}`
       );
     }
-    else{
-      console.log(result)
-    }
   };
 
   return (
