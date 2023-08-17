@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './config';
+import { useCreateUserMutation } from "../../store/apiSlice";
+import { Alert } from "react-native";
 
 function Signup({ navigation }) {
   const [fullName, setFullName] = useState('');
@@ -10,7 +12,7 @@ function Signup({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
+  const [createUser] = useCreateUserMutation();
   useEffect(() => {
     // Enable the button only when both email and passwords are filled
     setIsButtonEnabled(email && password && confirmPassword);
@@ -22,6 +24,10 @@ function Signup({ navigation }) {
         await createUserWithEmailAndPassword(auth, email, password);
         console.log('User successfully signed up!');
         console.log('Full Name:', fullName);
+        console.log('Email:', email);
+        console.log('Password:', password);
+        // If account ok -> create the user on the database
+        onCreateUser();
         navigation.navigate('Main');
       } else {
         setError("Passwords don't match");
@@ -37,6 +43,32 @@ function Signup({ navigation }) {
       } else {
         setError('There was a problem creating your account');
       }
+    }
+  };
+
+
+  const onCreateUser = async () => {
+    const result = await createUser({
+      user: email,
+      customer: {
+        name: fullName,
+        address: null,
+        email: email,
+      },
+    });
+
+    if (result.data?.status === "OK") {
+      Alert.alert(
+        "User has been Created",
+        `Your User reference is: ${result.data.data.ref}`
+      );
+      console.log(
+        "Order has been submitted",
+        `Your order reference is: ${result.data.data.ref}`
+      );
+    }
+    else{
+      console.log(result)
     }
   };
 

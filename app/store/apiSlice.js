@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = "https://shop-squad-api.onrender.com/";
+// const baseUrl = "https://shop-squad-api.onrender.com/";
+const baseUrl = "http://localhost:3000/";
 
 // Define a service using a base URL and expected endpoints
 export const apiSlice = createApi({
@@ -26,6 +27,17 @@ export const apiSlice = createApi({
     getOrder: builder.query({
       query: (ref) => `orders/${ref}`,
     }),
+    // Create User
+    createUser: builder.mutation({
+      query: (newUser) => ({
+        url: "users",
+        method: "POST",
+        body: newUser,
+      }),
+    }),
+    getUser: builder.query({
+      query: (ref) => `users/${ref}`,
+    }),
     // Payments
     createPaymentIntent: builder.mutation({
       query: (data) => ({
@@ -46,4 +58,7 @@ export const {
   useCreateOrderMutation,
   useGetOrderQuery,
   useCreatePaymentIntentMutation,
+  // user
+  useCreateUserMutation,
+  useGetUserQuery,
 } = apiSlice;

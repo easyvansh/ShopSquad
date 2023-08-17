@@ -32,7 +32,7 @@ function Login({navigation}) {
       <Text style={styles.heading}>Log In</Text>
       {error && <Text style={styles.error}>{error}</Text>}
       <TextInput  
-        placeholder="Username"
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
