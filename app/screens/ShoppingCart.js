@@ -113,7 +113,19 @@ const ShoppingCart = () => {
       dispatch(cartSlice.actions.clear());
     }
   };
-
+  if (cartItems.length == 0){
+    return(
+      <>
+      <View style = {{alignItems:"center",justifyContent: "center",flex:1}}>
+        <Text style = {{fontSize :20,color:"grey"}}>
+          Cart is Empty.
+        </Text>
+      </View>
+      </>
+    )
+  }
+  else{
+  // if(!cartItems){
   return (
     <>
       <FlatList
@@ -127,6 +139,7 @@ const ShoppingCart = () => {
       </Pressable>
     </>
   );
+}
 };
 
 const styles = StyleSheet.create({
