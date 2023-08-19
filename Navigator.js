@@ -9,11 +9,11 @@ import { FontAwesome5,MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { selectNumberOfItems } from "./app/store/cartSlice";
 import TrackOrder from "./app/screens/TrackOrder";
-
 import Login from './app/screens/Login/Login';
 import Signup from './app/screens/Login/Signup'
 import ForgotPassword from './app/screens/Login/ForgotPassword';
 import Main from './app/screens/Login/Main';
+import AccountDetails from "./app/screens/AccountDetails";
 
 const Stack = createStackNavigator();
 
@@ -46,7 +46,8 @@ const AppNavigator = () => {
             ),
             headerLeft: () => (
               <MaterialCommunityIcons
-                onPress={() => navigation.navigate('Track Order')}
+                // onPress={() => navigation.navigate('Track Order')}
+                onPress={() => navigation.navigate('Account Info')}
                 name="truck-delivery"
                 size={25}
                 style={{ marginLeft: 15, fontWeight: "500" }}
@@ -74,6 +75,7 @@ const AppNavigator = () => {
         />
         <Stack.Screen name="Cart" component={ShoppingCart} />
         <Stack.Screen name="Track Order" component={TrackOrder} />
+        <Stack.Screen name="Account Info" component={AccountDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
