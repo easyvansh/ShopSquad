@@ -17,6 +17,10 @@ function Main({ navigation }) {
       if (!user) {
         navigation.replace('Login'); // Redirect to login screen if not logged in
       }
+      else{
+        console.log(user.uid);
+        
+      }
     });
     return () => unsubscribe();
   }, [navigation]);
@@ -24,6 +28,7 @@ function Main({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Logged in</Text>
+
       <Button title="Continue" onPress={()=>{navigation.navigate("Home")}} />
       <Button title="Log out" onPress={logout} />
     </View>

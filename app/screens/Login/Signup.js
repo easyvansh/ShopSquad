@@ -4,6 +4,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './config';
 import { useCreateUserMutation } from "../../store/apiSlice";
 import { Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  userSlice,
+  selectUserRef
+} from "../../store/userSlice";
+
 
 function Signup({ navigation }) {
   const [fullName, setFullName] = useState('');
@@ -46,7 +52,8 @@ function Signup({ navigation }) {
     }
   };
 
-
+  const dispatch = useDispatch();
+  
   const onCreateUser = async () => {
     const result = await createUser({
       user: email,
@@ -56,18 +63,21 @@ function Signup({ navigation }) {
         email: email,
       },
     });
-
+    
+    
     if (result.data?.status === "OK") {
       Alert.alert(
         "User has been Created",
         `Your User reference is: ${result.data.data.ref}`
-      );
-      console.log(
-        "Order has been submitted",
-        `Your order reference is: ${result.data.data.ref}`
-      );
-    }
-  };
+        );
+        // redux logic to save user information
+        dispatch(
+          userSlice.actions.addUserItem({
+            userRef: result.data.data.ref,
+          })
+          );  
+        }
+      };
 
   return (
     <View style={styles.container}>

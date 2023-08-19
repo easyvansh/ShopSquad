@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Pressable, StyleSheet } from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from './config';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  userSlice,
+  selectUserRef
+} from "../../store/userSlice";
 
 function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -11,7 +16,11 @@ function Login({navigation}) {
   const loginUser = async () => {
     try{
     await signInWithEmailAndPassword(auth, email, password);
+    
     console.log('User successfully signed in!');
+    console.log(email)
+    console.log(password)
+
     navigation.navigate('Main');
   } catch (error) {
     console.error('Sign-in error:', error.code, error.message);
