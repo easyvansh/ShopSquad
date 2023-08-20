@@ -22,7 +22,7 @@ import {
   
     const dispatch = useDispatch();
   
-   
+   if (id){
     if (isLoading) {
       return <ActivityIndicator />;
     }
@@ -33,8 +33,7 @@ import {
     
     const user = data.data;
     // product
-    console.log(user.user)
-    console.log(user.customer.email)
+    console.log(user)
   
     
     return (
@@ -42,14 +41,27 @@ import {
           <View style={{ padding: 20 }}>
             {/* Title */}
             <Text style={styles.title}>{userRef}</Text>
-            {/* <Text style={styles.title}>{user}</Text> */}
+            <Text style={styles.title}>{user.user}</Text>
             {/* Price */}
-            {/* <Text style={styles.price}>$ {user.customer.name}</Text> */}
+            <Text style={styles.price}> {user.customer.name}</Text>
             {/* Description */}
-            {/* <Text style={styles.description}>{user.customer.email}</Text> */}
+            <Text style={styles.description}>{user.customer.email}</Text>
+            <Text style={styles.description}>{user.customer.address}</Text>
           </View>
       </View>
     );
+  }
+  else{
+    return (
+      <View>
+          <View style={{ padding: 20 }}>
+            {/* Title */}
+            <Text style={styles.title}>User Not Logged In</Text>
+           
+          </View>
+      </View>
+    )
+  }
   };
   
   const styles = StyleSheet.create({
