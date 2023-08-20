@@ -105,10 +105,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   ratingsContainer: {
+    marginLeft:width * 0.05,
     flexDirection: "row",
   },
   ratings: {
-    marginLeft:5,
+    marginLeft:width * 0.01,
     color: "rgba(122, 122, 122, 1)",
     fontSize: 18,
     fontWeight: "400",

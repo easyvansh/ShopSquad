@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    aspectRatio: 2,
+    aspectRatio: 2.25,
     resizeMode: "cover",
     width: width,
     height: height * 0.15,
     padding: 5,
-    marginVertical: 15,
+    marginVertical:height * 0.025,
   },
 });

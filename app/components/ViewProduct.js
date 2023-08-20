@@ -34,7 +34,6 @@ function ViewProduct({route}) {
     }
     
     const product = data.data;
-    console.log(product)
   return (
     <>
         {/* Image Carousel */}
