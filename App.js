@@ -8,7 +8,6 @@ export default function App() {
   return (
     <Provider store={store}>
       <StripeProvider publishableKey={STRIPE_KEY}>
-
       <AppNavigator />
       </StripeProvider>
     </Provider>

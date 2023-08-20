@@ -12,6 +12,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import {signOut,onAuthStateChanged} from 'firebase/auth';
 import { auth } from './Login/config';
 import { userSlice } from "../store/userSlice";
+import SearchBar from "../components/SearchBar";
 
 export default function App() {
   // const products = useSelector((state) => state.products.products);
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <>
     <ScrollView >
+      <SearchBar/>
     <BannerHeader/>
       <Text style = {{marginLeft:15,fontSize: 20, fontWeight: "600"}}>Active Squad</Text>
     <FlatList
@@ -83,6 +85,6 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     width: "50%",
-    padding: 1,
+    padding: 3,
   },
 });

@@ -35,8 +35,6 @@ const ProductDetails = ({route}) => {
   }
   
   const product = data.data;
-  // product
-  console.log(product.images)
 
   const addToCart = () => {
     dispatch(cartSlice.actions.addCartItem({ product,id }));

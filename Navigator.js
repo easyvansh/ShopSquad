@@ -1,82 +1,14 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import HomePage from "./app/screens/HomePage";
-import ProductDetails from "./app/screens/ProductDetails";
-import ShoppingCart from "./app/screens/ShoppingCart";
-import { Pressable, Text } from "react-native";
-import { FontAwesome5,MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
-import { selectNumberOfItems } from "./app/store/cartSlice";
-import TrackOrder from "./app/screens/TrackOrder";
-import Login from './app/screens/Login/Login';
-import Signup from './app/screens/Login/Signup'
-import ForgotPassword from './app/screens/Login/ForgotPassword';
-import Main from './app/screens/Login/Main';
-import AccountDetails from "./app/screens/AccountDetails";
-
-const Stack = createStackNavigator();
+import AuthStack from "./app/navigation/AuthStack";
+import AppStack from "./app/navigation/AppStack";
+import 'react-native-gesture-handler';
 
 const AppNavigator = () => {
-  const numberOfItems = useSelector(selectNumberOfItems);
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ contentStyle: { backgroundColor: "white" },showHeader: false}}
-      >
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Main" component={Main} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-    
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          options={({ navigation }) => ({
-            headerRight: () => (
-              <Pressable
-                onPress={() => navigation.navigate("Cart")}
-                style={{ flexDirection: "row", padding: 20 }}
-              >
-                <FontAwesome5 name="shopping-cart" size={18} color="gray" />
-                <Text style={{ marginLeft: 5, fontWeight: "500" }}>
-                  {numberOfItems}
-                </Text>
-              </Pressable>
-            ),
-            headerLeft: () => (
-              <MaterialCommunityIcons
-                // onPress={() => navigation.navigate('Track Order')}
-                onPress={() => navigation.navigate('Account Info')}
-                name="truck-delivery"
-                size={25}
-                style={{ marginLeft: 15, fontWeight: "500" }}
-                color="gray"
-              />
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Product Details"
-          component={ProductDetails}
-          options={({ navigation }) => ({
-            headerRight: () => (
-              <Pressable
-                onPress={() => navigation.navigate("Cart")}
-                style={{ flexDirection: "row", padding: 20 }}
-              >
-                <FontAwesome5 name="shopping-cart" size={18} color="gray" />
-                <Text style={{ marginLeft: 5, fontWeight: "500" }}>
-                  {numberOfItems}
-                </Text>
-              </Pressable>
-            ),
-          })}
-        />
-        <Stack.Screen name="Cart" component={ShoppingCart} />
-        <Stack.Screen name="Track Order" component={TrackOrder} />
-        <Stack.Screen name="Account Info" component={AccountDetails} />
-      </Stack.Navigator>
+      <AuthStack/>
+      {/* <AppStack/> */}
     </NavigationContainer>
   );
 };
