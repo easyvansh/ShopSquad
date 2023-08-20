@@ -12,14 +12,15 @@ function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
+  
   const loginUser = async () => {
     try{
     await signInWithEmailAndPassword(auth, email, password);
-    
+    const user = auth.currentUser;
     console.log('User successfully signed in!');
     console.log(email)
     console.log(password)
+    console.log(user.uid)
 
     navigation.navigate('Main');
   } catch (error) {

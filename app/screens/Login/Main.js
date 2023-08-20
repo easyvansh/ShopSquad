@@ -17,10 +17,7 @@ function Main({ navigation }) {
       if (!user) {
         navigation.replace('Login'); // Redirect to login screen if not logged in
       }
-      else{
-        console.log(user.uid);
-        
-      }
+      
     });
     return () => unsubscribe();
   }, [navigation]);

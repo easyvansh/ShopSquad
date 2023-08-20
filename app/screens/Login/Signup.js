@@ -52,9 +52,14 @@ function Signup({ navigation }) {
     }
   };
 
+
+
+  
+
   const dispatch = useDispatch();
   
   const onCreateUser = async () => {
+    const user = auth.currentUser;
     const result = await createUser({
       user: email,
       customer: {
@@ -62,6 +67,7 @@ function Signup({ navigation }) {
         address: null,
         email: email,
       },
+      uid: user.uid,
     });
     
     
@@ -69,13 +75,7 @@ function Signup({ navigation }) {
       Alert.alert(
         "User has been Created",
         `Your User reference is: ${result.data.data.ref}`
-        );
-        // redux logic to save user information
-        dispatch(
-          userSlice.actions.addUserItem({
-            userRef: result.data.data.ref,
-          })
-          );  
+        ); 
         }
       };
 
