@@ -41,11 +41,12 @@ import {
       <View>
           <View style={{ padding: 20 }}>
             {/* Title */}
-            <Text style={styles.title}>{user.user}</Text>
+            <Text style={styles.title}>{userRef}</Text>
+            {/* <Text style={styles.title}>{user}</Text> */}
             {/* Price */}
-            <Text style={styles.price}>$ {user.customer.name}</Text>
+            {/* <Text style={styles.price}>$ {user.customer.name}</Text> */}
             {/* Description */}
-            <Text style={styles.description}>{user.customer.email}</Text>
+            {/* <Text style={styles.description}>{user.customer.email}</Text> */}
           </View>
       </View>
     );

@@ -9,6 +9,9 @@ import { ActivityIndicator } from "react-native";
 import BannerHeader from "../components/BannerHeader";
 import SquadCard from "../components/SquadCard";
 import { ScrollView } from "react-native-gesture-handler";
+import {signOut,onAuthStateChanged} from 'firebase/auth';
+import { auth } from './Login/config';
+import { userSlice } from "../store/userSlice";
 
 export default function App() {
   // const products = useSelector((state) => state.products.products);
@@ -24,6 +27,22 @@ export default function App() {
   if (error) {
     return <Text>{error.error}</Text>;
   }
+  
+  
+  const user = auth.currentUser;
+
+  if (user) {
+  console.log('User email: ', user.email);
+  console.log('User ID: ', user.uid);
+  // redux logic to save user information
+  dispatch(
+    userSlice.actions.addUserItem({
+      userRef: user.uid,
+    })
+    );
+  }
+
+
   const products = data.data;
   return (
     <>
