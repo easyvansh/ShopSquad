@@ -34,7 +34,6 @@ export default function SquadCard(props) {
     }
     return svgImages
   }
-  console.log(item.image)
   return (
     <View style = {{alignItems: 'center'}}>
       <View style = {styles.squadContainer}>
