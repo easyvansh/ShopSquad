@@ -14,7 +14,7 @@ import { auth } from './Login/config';
 import { userSlice } from "../store/userSlice";
 import SearchBar from "../components/SearchBar";
 
-export default function App() {
+export default function HomePage() {
   // const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 

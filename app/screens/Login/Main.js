@@ -26,7 +26,7 @@ function Main({ navigation }) {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Logged in</Text>
 
-      <Button title="Continue" onPress={()=>{navigation.navigate("Home")}} />
+      <Button title="Continue" onPress={()=>{navigation.navigate('HomePage')}} />
       <Button title="Log out" onPress={logout} />
     </View>
   );
