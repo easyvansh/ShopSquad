@@ -5,7 +5,7 @@ import { cartSlice } from "../store/cartSlice";
 
 const CartListItem = ({ cartItem }) => {
   const dispatch = useDispatch();
-  
+
   const increaseQuantity = () => {
     dispatch(
       cartSlice.actions.changeQuantity({
@@ -46,7 +46,8 @@ const CartListItem = ({ cartItem }) => {
             color="gray"
           />
           <Text style={styles.itemTotal}>
-            $ {Math.round(cartItem.product.price * cartItem.quantity*100)/100}
+            ${" "}
+            {Math.round(cartItem.product.price * cartItem.quantity * 100) / 100}
           </Text>
         </View>
       </View>
