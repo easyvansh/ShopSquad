@@ -19,6 +19,7 @@ import { Alert } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { selectUserRef } from "../store/userSlice";
+import { auth } from "./Login/config";
 
 const { height,width } = Dimensions.get("window");
 
@@ -58,14 +59,8 @@ const ShoppingCart = () => {
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
   const dispatch = useDispatch();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  const userRef = useSelector(selectUserRef);
-  console.log(userRef);
-  const  userData= useGetUserQuery(userRef);
-  const user = userData.data.data.customer;
-  console.log(user);
+  
   const onCheckout = async () => {
-    // 4. If payment ok -> create the order
-    onCreateOrder();
     // 1. Create a payment intent
     const response = await createPaymentIntent({
       amount: Math.floor(total * 100),
@@ -75,10 +70,10 @@ const ShoppingCart = () => {
       Alert.alert("Something went wrong", response.error);
       return;
     }
-
+    
     // 2. Initialize the Payment sheet
     const { error: paymentSheetError } = await initPaymentSheet({
-      merchantDisplayName: "Example, Inc.",
+      merchantDisplayName: "ShopSquad, Inc.",
       paymentIntentClientSecret: response.data.paymentIntent,
       defaultBillingDetails: {
         name: "Jane Doe",
@@ -95,19 +90,25 @@ const ShoppingCart = () => {
       Alert.alert(`Error code: ${paymentError.code}`, paymentError.message);
       return;
     }
+    // 4. If payment ok -> create the order
+    onCreateOrder();
   };
-
+  
   const onCreateOrder = async () => {
+    const userRef = auth.currentUser;
+    const  data= useGetUserQuery(userRef);
+    const user = userData.data.data.customer;
+    console.log(user);
     const result = await createOrder({
       order: cartItems,
       subtotal,
       deliveryFee,
       total,
       customer: {
-        name: user.name,
-        address: user.address,
-        email: user.email,
-        uid: userRef,
+        // name: user.name,
+        // address: user.address,
+        // email: user.email,
+        uid: "123456",
       },
     });
 
@@ -142,7 +143,8 @@ const ShoppingCart = () => {
         </View>
       </>
     );
-  } else {
+  }  
+  else {
     // if(!cartItems){
     return (
       <>
@@ -151,7 +153,7 @@ const ShoppingCart = () => {
           renderItem={({ item }) => <CartListItem cartItem={item} />}
           ListFooterComponent={ShoppingCartTotals}
         />
-        <Pressable onPress={onCheckout} style={styles.button}>
+        <Pressable onPress={onCreateOrder} style={styles.button}>
           <Text style={styles.buttonText}>CheckOut</Text>
           {isLoading && <ActivityIndicator />}
         </Pressable>
@@ -168,7 +170,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     height: height*0.3,
     marginBottom:25,
-    borderWidth:5,
   },
   row: {
     flexDirection: "row",

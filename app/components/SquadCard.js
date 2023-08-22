@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     opacity: 1,
     backgroundColor: "rgba(255, 255, 255, 1)",
     alignItems: "center",
-    height:height*0.38,
+    height:height*0.3,
     width:width*0.46,
     marginTop: height * 0.02,
     marginBottom: height * 0.01,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   squadImage: {
-    height: height * 0.22,
+    height: height * 0.18,
     width: width * 0.46,
     overflow: "hidden",
     borderTopLeftRadius: 15,
