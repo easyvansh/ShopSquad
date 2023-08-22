@@ -6,27 +6,41 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { selectNumberOfItems } from "../store/cartSlice";
 import ProductDetails from "../screens/ProductDetails";
-import HomePage from "../screens/HomePage";
+import Login from "../screens/Login/Login";
+import Signup from "../screens/Login/Signup";
+import Main from "../screens/Login/Main";
+import ForgotPassword from "../screens/Login/ForgotPassword";
 import ShoppingCart from "../screens/ShoppingCart";
 import AccountDetails from "../screens/AccountDetails";
 import TrackOrder from "../screens/TrackOrder";
+import AppDrawer from "./AppDrawer";
+import { selectUserRef } from "../store/userSlice";
 
 const Stack = createStackNavigator();
 
 const AppStack = ({ navigation }) => {
   const numberOfItems = useSelector(selectNumberOfItems);
-
+  const userRef = useSelector(selectUserRef)
+    console.log(userRef)
+    
   return (
     <Stack.Navigator
-      initialRouteName="HomePage"
-      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+      screenOptions={{ headerShown: true }}
     >
-        
-      <Stack.Screen name="HomePage" component={HomePage} />
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="Signup" component={Signup}options={{ headerShown: false }}  />
+      <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Home"
+        component={AppDrawer}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Product Details"
         component={ProductDetails}
-        options={{
+        options={({ navigation }) => ({
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Cart")}
@@ -38,11 +52,11 @@ const AppStack = ({ navigation }) => {
               </Text>
             </Pressable>
           ),
-        }}
+        })}
       />
       <Stack.Screen name="Account Info" component={AccountDetails} />
       <Stack.Screen name="Cart" component={ShoppingCart} />
-      <Stack.Screen name="Track Order" component={TrackOrder} /> 
+      <Stack.Screen name="Track Order" component={TrackOrder} />
     </Stack.Navigator>
   );
 };

@@ -9,9 +9,10 @@ import ShoppingCart from "../screens/ShoppingCart";
 import TrackOrder from "../screens/TrackOrder";
 import AccountDetails from "../screens/AccountDetails";
 import AppStack from "./AppStack";
+import Logout from "../screens/Login/Logout";
 
 const Drawer = createDrawerNavigator();
-const AppDrawer = ({navigation}) => {
+const AppDrawer = ({ navigation }) => {
   const numberOfItems = useSelector(selectNumberOfItems);
   const navigateToHome = () => {
     navigation.navigate("AppStack", { screen: "HomePage" });
@@ -33,7 +34,7 @@ const AppDrawer = ({navigation}) => {
     >
       <Drawer.Screen
         name="Home"
-        component={AppStack}
+        component={HomePage}
         options={({ navigation }) => ({
           headerRight: () => (
             <Pressable
@@ -48,7 +49,8 @@ const AppDrawer = ({navigation}) => {
           ),
           drawerIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
-          ), onPress: navigateToHome,
+          ),
+          onPress: navigateToHome,
         })}
       />
       <Drawer.Screen
@@ -75,6 +77,15 @@ const AppDrawer = ({navigation}) => {
         options={{
           drawerIcon: ({ color, size }) => (
             <FontAwesome5 name="shopping-cart" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Logout"
+        component={Logout}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome5 name="sign-out-alt" color={color} size={size} />
           ),
         }}
       />

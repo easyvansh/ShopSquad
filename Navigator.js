@@ -1,15 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import AuthStack from "./app/navigation/AuthStack";
-import AppDrawer from "./app/navigation/AppDrawer";
 import "react-native-gesture-handler";
-import { auth } from "./app/screens/Login/config";
+import AppStack from "./app/navigation/AppStack";
+import Login from "./app/screens/Login/Login";
 
 const AppNavigator = () => {
-  const user = auth.currentUser;
   return (
     <NavigationContainer>
-      {user ? <AppDrawer /> : <AuthStack />}
+      <AppStack />
     </NavigationContainer>
   );
 };
