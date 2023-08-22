@@ -5,6 +5,7 @@ import { cartSlice } from "../store/cartSlice";
 
 const CartListItem = ({ cartItem }) => {
   const dispatch = useDispatch();
+  
   const increaseQuantity = () => {
     dispatch(
       cartSlice.actions.changeQuantity({
