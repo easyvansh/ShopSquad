@@ -3,6 +3,7 @@ import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 
 const initialState = {
+  userRef:null,
   items: [],
   deliveryPrice: 15,
   freeDeliveryFrom: 200,
@@ -21,6 +22,10 @@ export const cartSlice = createSlice({
     }else{
         state.items.push({ id: newProductId, product: newProductData, quantity: 1 });
     }
+  },
+  addUserToCart: (state, action) => {
+    const newProductUser = action.payload.user;
+    state.userRef = newProductUser;
   },
   changeQuantity: (state, action) => {
     const {productId,amount } = action.payload;

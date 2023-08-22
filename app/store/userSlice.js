@@ -5,6 +5,7 @@ import { createSlice, createSelector } from '@reduxjs/toolkit';
 const initialState = {
   userRef: null,
   deliveryAddress:[],
+  orderRef:null
 };
 
 export const userSlice = createSlice({
@@ -14,6 +15,11 @@ export const userSlice = createSlice({
     addUserItem: (state, action) => {
       const newUserRef = action.payload.userRef;
       state.userRef = newUserRef;
+
+  },
+    addOrderItem: (state, action) => {
+      const newOrderRef = action.payload.userRef;
+      state.orderRef = newOrderRef;
 
   },
   // clear: (state) => {
