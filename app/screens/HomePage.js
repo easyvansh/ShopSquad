@@ -21,9 +21,12 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const { data, error, isLoading } = useGetProductsQuery();
- 
   if (isLoading) {
-    return <ActivityIndicator/>;
+    return (<View style = {{justifyContent:'center',flex:1,padding:10}}>
+
+      <ActivityIndicator  color="rgba(111, 202, 186, 1)" size = "large"  style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}/>
+    </View>
+    );
   }
   if (error) {
     return <Text>{error.error}</Text>;

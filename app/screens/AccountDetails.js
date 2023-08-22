@@ -9,6 +9,7 @@ import {
   import { selectUserRef, userSlice } from "../store/userSlice";
   import { useGetUserQuery } from "../store/apiSlice";
   import { ActivityIndicator } from "react-native";
+import { Pressable } from "react-native";
   
   const { width } = Dimensions.get("window");
   
@@ -32,8 +33,6 @@ import {
     }
     
     const user = data.data;
-    // product
-    console.log(user)
   
     
     return (
@@ -57,6 +56,9 @@ import {
           <View style={{ padding: 20 }}>
             {/* Title */}
             <Text style={styles.title}>User Not Logged In</Text>
+            <Pressable style={styles.signInButton}onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.signInText}>Click To Log In</Text>
+            </Pressable>
            
           </View>
       </View>
@@ -97,6 +99,23 @@ import {
       color: "white",
       fontWeight: "500",
       fontSize: 16,
+    },
+    signInButton: {
+      backgroundColor:"rgba(111, 202, 186, 1)",
+      height: 50,
+      width: "80%",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 16,
+      elevation: 7,
+      marginVertical: 15,
+    },
+    signInText: {
+      fontSize: 24,
+      color: "white",
+      fontWeight: "bold",
+      letterSpacing: 0.25,
+      lineHeight: 28,
     },
   });
   

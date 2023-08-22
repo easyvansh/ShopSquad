@@ -8,14 +8,19 @@ import {
   selectSubtotal,
   selectTotal,
   selectNumberOfItems,
-  cartSlice
+  cartSlice,
 } from "../store/cartSlice";
-import { useCreateOrderMutation,useCreatePaymentIntentMutation } from "../store/apiSlice";
+import {
+  useCreateOrderMutation,
+  useCreatePaymentIntentMutation,
+  useGetUserQuery,
+} from "../store/apiSlice";
 import { Alert } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
+import { selectUserRef } from "../store/userSlice";
 
-const { width } = Dimensions.get("window");
+const { height,width } = Dimensions.get("window");
 
 const ShoppingCartTotals = () => {
   const subtotal = useSelector(selectSubtotal);
@@ -30,7 +35,7 @@ const ShoppingCartTotals = () => {
       </View>
       <View style={styles.row}>
         <Text style={styles.text}>Subtotal</Text>
-        <Text style={styles.text}>{Math.round(subtotal*100)/100}</Text>
+        <Text style={styles.text}>{Math.round(subtotal * 100) / 100}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.text}>Delivery</Text>
@@ -38,7 +43,7 @@ const ShoppingCartTotals = () => {
       </View>
       <View style={styles.row}>
         <Text style={styles.textBold}>Total</Text>
-        <Text style={styles.textBold}>$ {Math.round(total*100)/100}</Text>
+        <Text style={styles.textBold}>$ {Math.round(total * 100) / 100}</Text>
       </View>
     </View>
   );
@@ -52,40 +57,44 @@ const ShoppingCart = () => {
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
   const dispatch = useDispatch();
-  const {initPaymentSheet, presentPaymentSheet} = useStripe();
-
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const userRef = useSelector(selectUserRef);
+  console.log(userRef);
+  const  userData= useGetUserQuery(userRef);
+  const user = userData.data.data.customer;
+  console.log(user);
   const onCheckout = async () => {
+    // 4. If payment ok -> create the order
+    onCreateOrder();
     // 1. Create a payment intent
     const response = await createPaymentIntent({
-		  amount: Math.floor(total * 100),
-		});
-		console.log(response);
-		if (response.error) {
-		  Alert.alert('Something went wrong', response.error);
-		  return;
-		}
-   
+      amount: Math.floor(total * 100),
+    });
+    console.log(response);
+    if (response.error) {
+      Alert.alert("Something went wrong", response.error);
+      return;
+    }
+
     // 2. Initialize the Payment sheet
     const { error: paymentSheetError } = await initPaymentSheet({
-      merchantDisplayName: 'Example, Inc.',
-		  paymentIntentClientSecret: response.data.paymentIntent,
-		  defaultBillingDetails: {
-        name: 'Jane Doe',
-		  },
-		});
-		if (paymentSheetError) {
-      Alert.alert('Something went wrong', paymentSheetError.message);
-		  return;
-		}
+      merchantDisplayName: "Example, Inc.",
+      paymentIntentClientSecret: response.data.paymentIntent,
+      defaultBillingDetails: {
+        name: "Jane Doe",
+      },
+    });
+    if (paymentSheetError) {
+      Alert.alert("Something went wrong", paymentSheetError.message);
+      return;
+    }
     // 3. Present the Payment Sheet from Stripe
-    console.log("here")
+    console.log("here");
     const { error: paymentError } = await presentPaymentSheet();
     if (paymentError) {
       Alert.alert(`Error code: ${paymentError.code}`, paymentError.message);
       return;
     }
-    // 4. If payment ok -> create the order
-    onCreateOrder();
   };
 
   const onCreateOrder = async () => {
@@ -95,9 +104,10 @@ const ShoppingCart = () => {
       deliveryFee,
       total,
       customer: {
-        name: "Vansh",
-        address: "Home",
-        email: "vansh@email.com",
+        name: user.name,
+        address: user.address,
+        email: user.email,
+        uid: userRef,
       },
     });
 
@@ -105,41 +115,49 @@ const ShoppingCart = () => {
       Alert.alert(
         "Order has been submitted",
         `Your order reference is: ${result.data.data.ref}`
+
       );
+      
       console.log(
         "Order has been submitted",
         `Your order reference is: ${result.data.data.ref}`
       );
+      // const orderRef = result.data.data.ref;
+      // // redux logic to save Order information
+      // dispatch(
+      //   UserSlice.actions.addOrderItem({
+      //     orderRef:  orderRef,
+      //   })
+      //   );
       dispatch(cartSlice.actions.clear());
     }
   };
-  if (cartItems.length == 0){
-    return(
+  if (cartItems.length == 0) {
+    return (
       <>
-      <View style = {{alignItems:"center",justifyContent: "center",flex:1}}>
-        <Text style = {{fontSize :20,color:"grey"}}>
-          Cart is Empty.
-        </Text>
-      </View>
+        <View
+          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+        >
+          <Text style={{ fontSize: 20, color: "grey" }}>Cart is Empty.</Text>
+        </View>
       </>
-    )
+    );
+  } else {
+    // if(!cartItems){
+    return (
+      <>
+        <FlatList
+          data={cartItems}
+          renderItem={({ item }) => <CartListItem cartItem={item} />}
+          ListFooterComponent={ShoppingCartTotals}
+        />
+        <Pressable onPress={onCheckout} style={styles.button}>
+          <Text style={styles.buttonText}>CheckOut</Text>
+          {isLoading && <ActivityIndicator />}
+        </Pressable>
+      </>
+    );
   }
-  else{
-  // if(!cartItems){
-  return (
-    <>
-      <FlatList
-        data={cartItems}
-        renderItem={({ item }) => <CartListItem cartItem={item} />}
-        ListFooterComponent={ShoppingCartTotals}
-      />
-      <Pressable onPress={onCheckout} style={styles.button}>
-        <Text style={styles.buttonText}>CheckOut</Text>
-        {isLoading && <ActivityIndicator/>}
-      </Pressable>
-    </>
-  );
-}
 };
 
 const styles = StyleSheet.create({
@@ -148,6 +166,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderColor: "gainsboro",
     borderTopWidth: 1,
+    height: height*0.3,
+    marginBottom:25,
+    borderWidth:5,
   },
   row: {
     flexDirection: "row",
@@ -163,7 +184,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   button: {
-    position: "absolute",
+    position: "relative",
     backgroundColor: "black",
     bottom: 30,
     width: width * 0.9,

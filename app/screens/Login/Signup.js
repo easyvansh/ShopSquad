@@ -125,7 +125,7 @@ function Signup({ navigation }) {
       />
 
       <Pressable
-        style={[styles.signInButton, { backgroundColor: isButtonEnabled ? 'black' : 'transparent' }]}
+        style={[styles.signInButton, { backgroundColor: isButtonEnabled ? "rgba(111, 202, 186, 0.2)" : "rgba(111, 202, 186, 1)"  }]}
         onPress={createAccount}
         disabled={!isButtonEnabled}
       >
@@ -141,42 +141,55 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor:'white',
   },
   heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "500",
+    color: "rgba(0, 0, 0, 0.75)",
     marginBottom: 20,
+    fontSize: 24,
+    letterSpacing: 2,
+    lineHeight: 28,
+    marginVertical: 10,
   },
   input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'black',
+    width: "95%",
+    height: 50,
+    borderColor: "rgba(0, 0, 0, 0)",
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    borderRadius: 16,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    elevation: 5,
+    backgroundColor: "white",
   },
   error: {
     marginBottom: 20,
     color: 'red',
   },
   signInButton: {
-    width: '100%',
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    marginBottom: 10,
+    
+    height: 50,
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 16,
+    elevation: 7,
+    marginVertical: 15,
   },
   signInText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 24,
+    color: "white",
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    lineHeight: 28,
   },
   link: {
-    color: 'blue',
-    marginBottom: 20,
+    color: "blue",
+    marginVertical: 10,
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 28,
   },
 });
 
