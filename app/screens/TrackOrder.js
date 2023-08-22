@@ -9,20 +9,18 @@ import {
   import { useGetOrderQuery } from '../store/apiSlice';
 import ProductDetails from './ProductDetails';
 import ViewProduct from '../components/ViewProduct';
+import { useSelector } from 'react-redux';
+import { selectUserRef } from '../store/userSlice';
   
   const TrackOrder = () => {
-    const [ref, setRef] = useState('');
-  
-    const { data, isLoading, error } = useGetOrderQuery(ref);
+    const userRef = useSelector(selectUserRef);
+    console.log(userRef);
+  const id = userRef;
+    const { data, isLoading, error } = useGetOrderQuery(userRef);
    
     return (
       <View style={styles.root}>
-        <TextInput
-          style={styles.input}
-          value={ref}
-          onChangeText={setRef}
-          placeholder="Your order reference"
-        />
+        
         {isLoading &&<View style = {{justifyContent:'center',flex:1,padding:10}}>
 
       <ActivityIndicator  color="rgba(111, 202, 186, 1)" size = "large"  style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}/>

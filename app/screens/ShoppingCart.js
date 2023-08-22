@@ -59,7 +59,11 @@ const ShoppingCart = () => {
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
   const dispatch = useDispatch();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  
+  const userRef = useSelector(selectUserRef);
+  const id = userRef;
+  const userData= useGetUserQuery(id);
+  const user = userData.data;
+
   const onCheckout = async () => {
     // 1. Create a payment intent
     const response = await createPaymentIntent({
@@ -95,20 +99,18 @@ const ShoppingCart = () => {
   };
   
   const onCreateOrder = async () => {
-    const userRef = auth.currentUser;
-    const  data= useGetUserQuery(userRef);
-    const user = userData.data.data.customer;
-    console.log(user);
+    console.log(id);
+    console.log(user.data.customer);
     const result = await createOrder({
       order: cartItems,
       subtotal,
       deliveryFee,
       total,
       customer: {
-        // name: user.name,
-        // address: user.address,
-        // email: user.email,
-        uid: "123456",
+        name: user.data.customer.name,
+        address: user.data.customer.address,
+        email: user.data.customer.email,
+        uid: id,
       },
     });
 

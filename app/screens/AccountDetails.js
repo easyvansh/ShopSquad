@@ -4,10 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { selectUserRef, userSlice } from "../store/userSlice";
 import { useGetUserQuery } from "../store/apiSlice";
 import { ActivityIndicator } from "react-native";
+import { auth } from "./Login/config";
 
 const { width } = Dimensions.get("window");
 
 const AccountDetails = () => {
+
   const userRef = useSelector(selectUserRef);
   console.log(userRef);
   const id = userRef;
@@ -25,7 +27,6 @@ const AccountDetails = () => {
     }
 
     const user = data.data;
-
     return (
       <View>
         <View style={{ padding: 20 }}>
@@ -48,7 +49,7 @@ const AccountDetails = () => {
           <Text style={styles.title}>User Not Logged In</Text>
           <Pressable
             style={styles.signInButton}
-            onPress={() => navigation.navigate("Login")}
+            onPress={()=> navigation.replace("Login")}
           >
             <Text style={styles.signInText}>Click To Log In</Text>
           </Pressable>
