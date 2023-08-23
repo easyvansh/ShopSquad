@@ -4,7 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
+  Image as ReactImage,
   Pressable,
   StyleSheet,
 } from "react-native";
@@ -12,6 +12,17 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./config";
 import { useDispatch, useSelector } from "react-redux";
 import { userSlice, selectUserRef } from "../../store/userSlice";
+import BgEllipse from "./bgEllipse";
+import Svg, {
+  Defs,
+  Pattern,
+  Path as SvgPath,
+  Text as SvgText,
+  Image as SvgImage,
+} from "react-native-svg";
+import { Dimensions } from "react-native";
+
+const { height, width } = Dimensions.get("window");
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -47,59 +58,139 @@ function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>LOGIN</Text>
+      <BgEllipse />
+      <View style={styles.iconContainer}>
+        <Svg
+          style={styles.iconMaterialPerson}
+          preserveAspectRatio="none"
+          viewBox="6 6 50 50"
+          fill="rgba(255, 255, 255, 1)"
+        >
+          <SvgPath d="M 31 31 C 37.90625 31 43.5 25.40625 43.5 18.5 C 43.5 11.59374809265137 37.90625 6 31 6 C 24.09374809265137 6 18.5 11.59374809265137 18.5 18.5 C 18.5 25.40625 24.09374809265137 31 31 31 Z M 31 37.25 C 22.65624809265137 37.25 6 41.4375 6 49.74999618530273 L 6 55.99999618530273 L 55.99999618530273 55.99999618530273 L 55.99999618530273 49.74999618530273 C 55.99999618530273 41.4375 39.34375 37.25 31 37.25 Z" />
+        </Svg>
+      </View>
+
+      {/* <TextInput
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          placeholder="Enter email address"
+          autoCapitalize="none"
+          style={styles.emailAddress}
+          placeholderTextColor="rgba(255, 255, 255, 1)"
+          underlineColorAndroid="transparent"
+        />
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter password"
+          autoCapitalize="none"
+          placeholderTextColor="rgba(255, 255, 255, 1)"
+          underlineColorAndroid="transparent"
+          secureTextEntry={true}
+          style={styles.password}
+        /> */}
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          placeholder="Email"
+          autoCapitalize="none"
+          style={styles.emailAddress}
+          placeholderTextColor="rgba(255, 255, 255, 1)"
+          underlineColorAndroid="transparent"
+        />
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          autoCapitalize="none"
+          placeholderTextColor="rgba(255, 255, 255, 1)"
+          underlineColorAndroid="transparent"
+          secureTextEntry={true}
+          style={styles.password}
+        />
+      </View>
+      <View style={[styles.buttonContainer,{width: width * 0.6,
+    height: height * 0.09,}]}>
+        <TouchableOpacity
+          style={[styles.rectangleButton,{width: width * 0.6,
+            height: height * 0.09,}]}
+          onPress={loginUser}
+          disabled={!email || !password}
+        >
+          <Text style={styles.signUp}>Log In</Text>
+        </TouchableOpacity>
       {error && <Text style={styles.error}>{error}</Text>}
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCompleteType="email"
-        autoCapitalize="none"
-        placeholderTextColor="#aaa"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        placeholderTextColor="#aaa"
-        style={styles.input}
-        secureTextEntry={true}
-      />
-      <TouchableOpacity
+      <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+        <Text style={styles.link}>Forgot Password?</Text>
+      </Pressable>
+      </View>
+      {/* <TouchableOpacity
         style={styles.signInButton}
         onPress={loginUser}
         disabled={!email || !password}
-      >
+        >
         <Text style={styles.signInText}>Log In</Text>
       </TouchableOpacity>
+*/}
+      <View style={styles.signUpWithContainer}>
+        <Text style={styles.signUpWith}>Sign In With</Text>
+        <View style={styles.logoContainer}>
+          <TouchableOpacity
+            onPress={() => handleLogoPress("https://www.google.com")}
+          >
+            <ReactImage
+              source={require("./googlelogo.png")}
+              style={styles.googlelogo}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleLogoPress("https://www.facebook.com")}
+          >
+            <ReactImage
+              source={require("./facebooklogo.png")}
+              style={styles.facebooklogo}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.orSignUpWithContainer}>
+        <Text style={styles.orSignUp}>Don't have an account?</Text>
+        </View> 
+        <View style={[styles.buttonContainer,{width:width*0.25,height:height*0.08,marginTop:80}]}>
+          <TouchableOpacity
+            style={[styles.rectangleButton,{width:width*0.25,height:height*0.08}]}
+            onPress={() => navigation.navigate("Signup")}>
+            <Text style={styles.signUp}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+        {/* <Pressable
+          style={styles.signUpButton}
+          onPress={() => navigation.navigate("Signup")}
+        >
+          <Text style={styles.signUpText}>Sign Up</Text>
+        </Pressable> */}
 
-      <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
-        <Text style={styles.link}>FORGOT PASSWORD?</Text>
-      </Pressable>
 
-      <Text style={styles.orText}>or</Text>
-
-      <View style={styles.socialButtonsContainer}>
-        <Image
-          source={require("./facebook_logo.png")}
-          style={styles.socialLogo}
-        />
-        <Image
-          source={require("./google_logo.png")}
-          style={styles.socialLogo}
+      </View>
+      <View style={styles.shopSquadLogoContainer}>
+        <ReactImage
+          style={styles.shopSquadLogo}
+          source={require("./shopsquadlogo.png")}
         />
       </View>
 
-      <Text>Don't have an account?</Text>
-      <Pressable
-        style={styles.signUpButton}
-        onPress={() => navigation.navigate("Signup")}
-      >
-        <Text style={styles.signUpText}>Sign Up</Text>
-      </Pressable>
+      {/* <View style={styles.socialButtonsContainer}>
+        <Image
+          source={require("./facebooklogo.png")}
+          style={styles.socialLogo}
+          />
+        <Image
+          source={require("./googlelogo.png")}
+          style={styles.socialLogo}
+          />
+      </View>*/}
     </View>
   );
 }
@@ -107,10 +198,184 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    backgroundColor:'white',
+    backgroundColor: "white",
+  },
+  iconContainer: {
+    position: "relative",
+    top: width * 0.1,
+    marginTop: width * 0.1,
+    marginBottom: 0,
+  },
+  iconMaterialPerson: {
+    opacity: 1,
+    width: width * 0.2,
+    height: width * 0.2,
+    shadowColor: "black",
+    shadowOpacity: 0.6,
+    elevation: 2,
+  },
+  inputContainer: {
+    position: "relative",
+    height: 300,
+    width: 250,
+    top: 0,
+    marginTop: 0,
+    paddingHorizontal: 18,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  emailAddress: {
+    color: "rgba(255, 255, 255, 1)",
+    width: "100%",
+    height: height * 0.05,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    marginBottom: 10,
+    opacity: 1,
+    position: "relative",
+    fontSize: 13,
+    fontWeight: "500",
+    fontStyle: "normal",
+    textAlign: "left",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+  },
+  password: {
+    color: "rgba(255, 255, 255, 1)",
+    width: "100%",
+    height: height * 0.05,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    marginBottom: 10,
+    opacity: 1,
+    position: "relative",
+    fontSize: 13,
+    fontWeight: "500",
+    fontStyle: "normal",
+    textAlign: "left",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+  },
+
+  buttonContainer: {
+    position: "relative",
+    top: -60,
+    marginTop: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  rectangleButton: {
+    padding: 0.5,
+    opacity: 1,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderTopLeftRadius: width / 2,
+    borderTopRightRadius: width / 2,
+    borderBottomLeftRadius: width / 2,
+    borderBottomRightRadius: width / 2,
+    shadowColor: "black",
+    shadowOpacity: 0.9,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 50,
+    // },
+    shadowRadius: 0,
+    elevation: 2,
+  },
+  signUp: {
+    opacity: 1,
+    color: "rgba(56, 199, 130, 1)",
+    position: "relative",
+    fontSize: 20,
+    fontWeight: "900",
+    fontStyle: "normal",
+  },
+  error: {
+    marginBottom: 20,
+    color: "red",
+    marginVertical: 0,
+    fontSize: 16,
+    fontWeight: "500",
+    lineHeight: 28,
+  },
+  signUpWithContainer: {
+    top:-20,
+    position: "relative",
+    width: width * 0.3,
+    height: height * 0.12,
+    marginTop: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  signUpWith: {
+    opacity: 1,
+    position: "absolute",
+    color: "rgba(255, 255, 255, 1)",
+    fontSize: 12,
+    fontWeight: "500",
+    fontStyle: "normal",
+    textAlign: "left",
+    top: 0,
+    marginTop: 0,
+  },
+  orSignUp: {
+    opacity: 1,
+    position: "absolute",
+    color: "rgba(255, 255, 255, 1)",
+    fontSize: 12,
+    fontWeight: "500",
+    fontStyle: "normal",
+    textAlign: "left",
+    top: 50,
+    marginTop: 0,
+  },
+  orSignUpWithContainer: {
+    position: "relative",
+    width: width * 0.3,
+    height: height * 0.12,
+    top:10,
+    marginTop: 20,
+    flexDirection:"column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoContainer: {
+    top:80,
+    flexDirection: "row",
+    width: width * 0.4,
+    height: width * 0.2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  googlelogo: {
+    opacity: 1,
+    position: "relative",
+    width: width * 0.07,
+    height: width * 0.07,
+    marginRight: 8,
+  },
+  facebooklogo: {
+    opacity: 1,
+    position: "relative",
+    width: width * 0.07,
+    height: width * 0.07,
+    marginLeft: 8,
+  },
+  shopSquadLogoContainer: {
+    position: "relative",
+    height: width * 0.4,
+    top: -width * 0.1,
+    width: width,
+    left: 0,
+    bottom: 0,
+  },
+  shopSquadLogo: {
+    height: width * 0.35,
+    width: width * 0.35,
   },
   heading: {
     fontWeight: "500",
@@ -180,19 +445,11 @@ const styles = StyleSheet.create({
     height: 30,
     marginHorizontal: 10,
   },
-  error: {
-    color: "red",
-    marginBottom: 10,
-    marginVertical: 10,
-    fontSize: 16,
-    fontWeight: "400",
-    lineHeight: 28,
-  },
   link: {
-    color: "blue",
-    marginVertical: 10,
+    color: "white",
+    marginVertical: 0,
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "500",
     lineHeight: 28,
   },
 });
