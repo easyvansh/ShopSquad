@@ -15,6 +15,7 @@ import AccountDetails from "../screens/AccountDetails";
 import TrackOrder from "../screens/TrackOrder";
 import AppDrawer from "./AppDrawer";
 import { selectUserRef } from "../store/userSlice";
+import HomePage from "../screens/HomePage";
 
 const Stack = createStackNavigator();
 
@@ -34,8 +35,7 @@ const AppStack = ({ navigation }) => {
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
       <Stack.Screen
         name="Home"
-        component={AppDrawer}
-        options={{ headerShown: false }}
+        component={HomePage}
       />
       <Stack.Screen
         name="Product Details"

@@ -10,6 +10,7 @@ import TrackOrder from "../screens/TrackOrder";
 import AccountDetails from "../screens/AccountDetails";
 import AppStack from "./AppStack";
 import Logout from "../screens/Login/Logout";
+import CustomDrawer from "./CustomDrawer";
 
 const Drawer = createDrawerNavigator();
 const AppDrawer = ({ navigation }) => {
@@ -21,8 +22,9 @@ const AppDrawer = ({ navigation }) => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      drawerContent={props => <CustomDrawer {...props}/>}
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         drawerActiveBackgroundColor: "green",
         drawerActiveTintColor: "#fff",
         drawerInactiveTintColor: "#333",
@@ -34,7 +36,8 @@ const AppDrawer = ({ navigation }) => {
     >
       <Drawer.Screen
         name="Home"
-        component={HomePage}
+        component={AppStack}
+        
         options={({ navigation }) => ({
           headerRight: () => (
             <Pressable
@@ -54,7 +57,7 @@ const AppDrawer = ({ navigation }) => {
         })}
       />
       <Drawer.Screen
-        name="Profile"
+        name="My Profile"
         component={AccountDetails}
         options={{
           drawerIcon: ({ color, size }) => (
@@ -63,7 +66,7 @@ const AppDrawer = ({ navigation }) => {
         }}
       />
       <Drawer.Screen
-        name="Orders"
+        name="My Squad"
         component={TrackOrder}
         options={{
           drawerIcon: ({ color, size }) => (
