@@ -18,7 +18,7 @@ import SquadCard from "./SquadCard";
 const { width } = Dimensions.get("window");
 function ViewProduct({ route }) {
   const navigation = useNavigation();
-  console.log(route.order)
+  console.log(route.order.id)
   return (
     <>
       {/* Image Carousel */}
@@ -38,8 +38,8 @@ function ViewProduct({ route }) {
               style={styles.itemContainer}
             >
 
-            </Pressable>
              <SquadCard item={item.product} />
+            </Pressable>
             <Text style={styles.price}>{item.product.name}</Text>
             {/* Price */}
             <Text style={styles.price}>Cost of Product $ {item.product.price}</Text>
