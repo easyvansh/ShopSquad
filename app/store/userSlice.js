@@ -17,10 +17,6 @@ export const userSlice = createSlice({
       state.userRef = newUserRef;
 
   },
-    addOrderItem: (state, action) => {
-      const newOrderRef = action.payload.userRef;
-      state.orderRef = newOrderRef;
-  },
   // clear: (state) => {
   //   state.userInfo = [];
   // },

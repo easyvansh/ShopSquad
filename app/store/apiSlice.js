@@ -6,11 +6,14 @@ const baseUrl = "https://shop-squad-api.onrender.com/";
 // Define a service using a base URL and expected endpoints
 export const apiSlice = createApi({
   reducerPath: "api",
+  // Base Query => https://shop-squad-api.onrender.com/
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
+    // Get Banners of Products
     getBanners:builder.query({
       query: () => "products/banners",
     }),
+    // Get All Products 
     getProducts: builder.query({
       query: () => "products",
     }),
