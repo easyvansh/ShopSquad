@@ -7,7 +7,7 @@ import AppDrawer from "./app/navigation/AppDrawer";
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <AppDrawer />
+      <AppStack />
     </NavigationContainer>
   );
 };
