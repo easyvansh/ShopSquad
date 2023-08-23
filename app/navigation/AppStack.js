@@ -26,8 +26,8 @@ const AppStack = ({ navigation }) => {
     
   return (
     <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{ headerShown: true }}
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Signup" component={Signup}options={{ headerShown: false }}  />
@@ -35,7 +35,7 @@ const AppStack = ({ navigation }) => {
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
       <Stack.Screen
         name="Home"
-        component={HomePage}
+        component={AppDrawer}
       />
       <Stack.Screen
         name="Product Details"

@@ -24,9 +24,9 @@ const AppDrawer = ({ navigation }) => {
       initialRouteName="Home"
       drawerContent={props => <CustomDrawer {...props}/>}
       screenOptions={{
-        headerShown: false,
-        drawerActiveBackgroundColor: "green",
-        drawerActiveTintColor: "#fff",
+        headerShown: true,
+        drawerActiveBackgroundColor: "rgba(56, 199, 130, 1)",
+        drawerActiveTintColor: "rgba(255, 255, 255, 1)",
         drawerInactiveTintColor: "#333",
         drawerLabelStyle: {
           marginLeft: 10,
@@ -36,7 +36,7 @@ const AppDrawer = ({ navigation }) => {
     >
       <Drawer.Screen
         name="Home"
-        component={AppStack}
+        component={HomePage}
         
         options={({ navigation }) => ({
           headerRight: () => (
@@ -51,7 +51,7 @@ const AppDrawer = ({ navigation }) => {
             </Pressable>
           ),
           drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
           ),
           onPress: navigateToHome,
         })}
@@ -61,7 +61,7 @@ const AppDrawer = ({ navigation }) => {
         component={AccountDetails}
         options={{
           drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="account-outline" color={color} size={size} />
           ),
         }}
       />
@@ -70,7 +70,7 @@ const AppDrawer = ({ navigation }) => {
         component={TrackOrder}
         options={{
           drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="truck" color={color} size={size} />
+            <MaterialCommunityIcons name="truck-outline" color={color} size={size} />
           ),
         }}
       />
@@ -90,6 +90,7 @@ const AppDrawer = ({ navigation }) => {
           drawerIcon: ({ color, size }) => (
             <FontAwesome5 name="sign-out-alt" color={color} size={size} />
           ),
+          drawerActiveBackgroundColor: "rgba(225, 0, 0, 0.8)",
         }}
       />
     </Drawer.Navigator>
