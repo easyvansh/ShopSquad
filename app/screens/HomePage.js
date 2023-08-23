@@ -1,9 +1,7 @@
 import { StyleSheet, Pressable, Text, View, Image } from "react-native";
-// import products from "../data/products";
 import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { productsSlice } from "../store/productsSlice";
 import { useGetBannersQuery, useGetProductsQuery } from "../store/apiSlice";
 import { ActivityIndicator } from "react-native";
 import BannerHeader from "../components/BannerHeader";
@@ -15,11 +13,9 @@ import { userSlice } from "../store/userSlice";
 import SearchBar from "../components/SearchBar";
 
 export default function HomePage() {
-  // const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
-
   const navigation = useNavigation();
-
+  // Query To Get All the Product in the Database
   const { data, error, isLoading } = useGetProductsQuery();
   if (isLoading) {
     return (
@@ -36,19 +32,18 @@ export default function HomePage() {
     return <Text>{error.error}</Text>;
   }
 
+  // Get the Current User if logged in
   const user = auth.currentUser;
 
   if (user) {
-    console.log("User email: ", user.email);
-    console.log("User ID: ", user.uid);
-    // redux logic to save user information
+    // redux logic to save user id
     dispatch(
       userSlice.actions.addUserItem({
         userRef: user.uid,
       })
     );
   }
-
+  // retrieving products from the query request
   const products = data.data;
   return (
     <>

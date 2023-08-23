@@ -19,7 +19,7 @@ import { Alert } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { selectUserRef } from "../store/userSlice";
-import { auth } from "./Login/config";
+import { useNavigation } from "@react-navigation/native";
 
 const { height,width } = Dimensions.get("window");
 
@@ -63,8 +63,9 @@ const ShoppingCart = () => {
   const id = userRef;
   const userData= useGetUserQuery(id);
   const user = userData.data;
-
+  const navigation = useNavigation();
   const onCheckout = async () => {
+    customer= user.data.customer
     // 1. Create a payment intent
     const response = await createPaymentIntent({
       amount: Math.floor(total * 100),
@@ -75,12 +76,34 @@ const ShoppingCart = () => {
       return;
     }
     
+
+    const API_URL = "https://shop-squad-api.onrender.com/"
+    const fetchPaymentSheetParams = async () => {
+      const response = await fetch(`${API_URL}/intent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const { paymentIntent, ephemeralKey, customer} = await response.json();
+  
+      return {
+        paymentIntent,
+        ephemeralKey,
+        customer,
+      };
+    };
+
     // 2. Initialize the Payment sheet
+    
+    
     const { error: paymentSheetError } = await initPaymentSheet({
+      
       merchantDisplayName: "ShopSquad, Inc.",
       paymentIntentClientSecret: response.data.paymentIntent,
       defaultBillingDetails: {
-        name: "Jane Doe",
+        name: customer.name,
+        email: customer.email,
       },
     });
     if (paymentSheetError) {
@@ -88,7 +111,6 @@ const ShoppingCart = () => {
       return;
     }
     // 3. Present the Payment Sheet from Stripe
-    console.log("here");
     const { error: paymentError } = await presentPaymentSheet();
     if (paymentError) {
       Alert.alert(`Error code: ${paymentError.code}`, paymentError.message);
@@ -99,17 +121,16 @@ const ShoppingCart = () => {
   };
   
   const onCreateOrder = async () => {
-    console.log(id);
-    console.log(user.data.customer);
+    customer= user.data.customer
     const result = await createOrder({
       order: cartItems,
       subtotal,
       deliveryFee,
       total,
       customer: {
-        name: user.data.customer.name,
-        address: user.data.customer.address,
-        email: user.data.customer.email,
+        name: customer.name,
+        address:customer.address,
+        email: customer.email,
         uid: id,
       },
     });
@@ -125,14 +146,8 @@ const ShoppingCart = () => {
         "Order has been submitted",
         `Your order reference is: ${result.data.data.ref}`
       );
-      // const orderRef = result.data.data.ref;
-      // // redux logic to save Order information
-      // dispatch(
-      //   UserSlice.actions.addOrderItem({
-      //     orderRef:  orderRef,
-      //   })
-      //   );
       dispatch(cartSlice.actions.clear());
+
     }
   };
   if (cartItems.length == 0) {

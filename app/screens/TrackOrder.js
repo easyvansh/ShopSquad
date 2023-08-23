@@ -25,7 +25,7 @@ import { selectUserRef } from '../store/userSlice';
 
       <ActivityIndicator  color="rgba(111, 202, 186, 1)" size = "large"  style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}/>
       </View>}
-        {data?.status !== 'OK' && <Text>Order not found</Text>}
+        {data?.status !== 'OK' && <Text>No Squads Participant</Text>}
         {/* {data?.status === 'OK' && <Text>Order: {JSON.stringify(data.data)}</Text>} */}
         {data?.status === 'OK'  && <ViewProduct route = {data.data}/>
         }
