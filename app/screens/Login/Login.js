@@ -27,7 +27,7 @@ function Login({ navigation }) {
       console.log(password);
       console.log(user.uid);
 
-      navigation.navigate("Main");
+      navigation.replace("Home");
     } catch (error) {
       console.error("Sign-in error:", error.code, error.message);
       if (

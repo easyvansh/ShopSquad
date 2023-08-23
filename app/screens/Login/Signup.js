@@ -34,7 +34,7 @@ function Signup({ navigation }) {
         console.log('Password:', password);
         // If account ok -> create the user on the database
         onCreateUser();
-        navigation.navigate('Main');
+        navigation.replace('Home');
       } else {
         setError("Passwords don't match");
       }
@@ -125,7 +125,7 @@ function Signup({ navigation }) {
       />
 
       <Pressable
-        style={[styles.signInButton, { backgroundColor: isButtonEnabled ? "rgba(111, 202, 186, 0.2)" : "rgba(111, 202, 186, 1)"  }]}
+        style={[styles.signInButton, { backgroundColor: isButtonEnabled ? "rgba(111, 202, 186, 1)" : "rgba(111, 202, 186, 0.9)"  }]}
         onPress={createAccount}
         disabled={!isButtonEnabled}
       >
@@ -168,13 +168,12 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   signInButton: {
-    
     height: 50,
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 16,
-    elevation: 7,
+    elevation: 4,
     marginVertical: 15,
   },
   signInText: {
