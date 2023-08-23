@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, Text, Pressable } from "react-native";
+import { StyleSheet, View, Dimensions, Text, Pressable, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { selectUserRef, userSlice } from "../store/userSlice";
@@ -27,17 +27,17 @@ const AccountDetails = () => {
     }
 
     const user = data.data;
+    console.log(user)
+    const userName = user.user.split('@')[0];
     return (
       <View>
-        <View style={{ padding: 20 }}>
+        <View style={{ padding: 20,flexDirection:"row",backgroundColor:"rgba(56, 199, 130, 1)" }}>
           {/* Title */}
-          <Text style={styles.title}>{userRef}</Text>
-          <Text style={styles.title}>{user.user}</Text>
-          {/* Price */}
-          <Text style={styles.price}> {user.customer.name}</Text>
-          {/* Description */}
-          <Text style={styles.description}>{user.customer.email}</Text>
-          <Text style={styles.description}>{user.customer.address}</Text>
+          <Image
+              source={require("../navigation/assets/user.png")}
+              style={styles.userImage}
+            />
+          <Text style={styles.title}>{userName}</Text>
         </View>
       </View>
     );
@@ -61,9 +61,10 @@ const AccountDetails = () => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 30,
-    fontWeight: "500",
+    fontSize: 24,
+    fontWeight: "800",
     marginVertical: 10,
+    color: "white",
   },
   price: {
     fontWeight: "500",
@@ -109,6 +110,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     lineHeight: 28,
+  },
+  userImage: {
+    height: width * 0.18,
+    width: width * 0.18,
+    position: "relative",
+    marginLeft: 20,
+    borderRadius: 24,
+    marginHorizontal:50,
   },
 });
 
