@@ -18,9 +18,10 @@ Work Done:
 
 Currently Working On:
 
-    - Login Logic
-    - Adding More Screens and Navigation
-    - Styling
+    - Create Cart Daatabase ( As redux loses cart config after refresh )
+    - Payment Logic
+    - Adding Address
+    - Refactoring Login and Database Logic
     
 ## Installation
 
