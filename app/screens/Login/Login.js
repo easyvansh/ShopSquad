@@ -153,7 +153,7 @@ function Login({ navigation }) {
         </View> 
           <Pressable
             onPress={() => navigation.navigate("Signup")}>
-            <Text style={styles.link}>Sign Up</Text>
+            <Text style={[styles.link,{fontSize:24}]}>Sign Up</Text>
           </Pressable>
 
 
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   shopSquadLogoContainer: {
-    position: "absolute",
+    position: "relative",
     height: width * 0.4,
     width: width,
     left: 0,
