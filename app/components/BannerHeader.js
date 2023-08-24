@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     width: width,
     height: height * 0.15,
-    padding: 5,
-    marginVertical:height * 0.025,
+    paddingHorizontal: 5,
+    marginVertical:height * 0.0125,
   },
 });

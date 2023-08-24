@@ -18,7 +18,7 @@ import SquadCard from "./SquadCard";
 const { width } = Dimensions.get("window");
 function ViewProduct({ route }) {
   const navigation = useNavigation();
-  console.log(route.order.id)
+  console.log(route.order.id);
   return (
     <>
       {/* Image Carousel */}
@@ -26,10 +26,10 @@ function ViewProduct({ route }) {
         data={route.order}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={{ padding: 2,alignItems:'flex-start' }}>
-            <Text style = {styles.title}>Hosting</Text>
-            <Text style = {styles.title}>Participating</Text>
-            <Text style = {styles.title}>Completed</Text>
+          <View style={{ padding: 2, alignItems: "flex-start" }}>
+            <Text style={styles.title}>Hosting</Text>
+            <Text style={styles.title}>Participating</Text>
+            <Text style={styles.title}>Completed</Text>
             <Pressable
               onPress={() => {
                 // dispatch(productsSlice.actions.setSelectedProduct(item.id));
@@ -37,14 +37,22 @@ function ViewProduct({ route }) {
               }}
               style={styles.itemContainer}
             >
-
-             <SquadCard item={item.product} />
+              <SquadCard item={item.product} />
             </Pressable>
             <Text style={styles.price}>{item.product.name}</Text>
             {/* Price */}
-            <Text style={styles.price}>Cost of Product $ {item.product.price}</Text>
+            <Text style={styles.price}>
+              Cost of Product $ {item.product.price}
+            </Text>
             <Text style={styles.description}>Quantity - {item.quantity} </Text>
-            <Text style = {[ styles.description  ,{paddingBottom: 50,marginVertical: 10,}]}>Status - Order On It's Way</Text>
+            <Text
+              style={[
+                styles.description,
+                { paddingBottom: 50, marginVertical: 10 },
+              ]}
+            >
+              Status - Order On It's Way
+            </Text>
           </View>
         )}
         pagingEnabled
@@ -69,7 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 30,
     fontWeight: "300",
- 
   },
 });
 export default ViewProduct;
