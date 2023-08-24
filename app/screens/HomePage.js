@@ -11,7 +11,10 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Login/config";
 import { userSlice } from "../store/userSlice";
 import SearchBar from "../components/SearchBar";
+import { Dimensions } from "react-native";
+import { useCreateCartMutation } from "../store/apiSlice";
 
+const { height, width } = Dimensions.get("window");
 export default function HomePage() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,6 +38,7 @@ export default function HomePage() {
   // Get the Current User if logged in
   const user = auth.currentUser;
 
+    
   if (user) {
     // redux logic to save user id
     dispatch(
@@ -42,45 +46,49 @@ export default function HomePage() {
         userRef: user.uid,
       })
     );
+    console.log("Cart created")
+    
   }
+
   // retrieving products from the query request
   const products = data.data;
+
   return (
-    <>
-      <ScrollView>
-        <SearchBar />
-        <BannerHeader />
-        <Text style={{ marginLeft: 15, fontSize: 20, fontWeight: "600" }}>
-          Active Squad
-        </Text>
+    <ScrollView style={styles.container}>
+      <SearchBar />
+      <BannerHeader />
+      <Text style={{ marginLeft: 15, fontSize: 20, fontWeight: "600" }}>
+        Active Squad
+      </Text>
+      <View style={styles.flatListContainer}>
         <FlatList
           data={products}
           renderItem={({ item }) => (
             <Pressable
               onPress={() => {
-                // dispatch(productsSlice.actions.setSelectedProduct(item.id));
                 navigation.navigate("Product Details", { id: item.id });
               }}
               style={styles.itemContainer}
             >
               <SquadCard item={item} />
-              {/* <Image source={{ uri: item.image }} style={styles.image} /> */}
             </Pressable>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => item.id + "-" + index}
           numColumns={2}
         />
-      </ScrollView>
-    </>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "rgb(255,255,255)",
+    paddingTop: width * 0.12,
+  },
+  flatListContainer: {
+    paddingBottom: width * 0.15,
   },
   image: {
     aspectRatio: 1,

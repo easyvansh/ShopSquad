@@ -5,6 +5,8 @@ import { selectUserRef, userSlice } from "../store/userSlice";
 import { useGetUserQuery } from "../store/apiSlice";
 import { ActivityIndicator } from "react-native";
 import { auth } from "./Login/config";
+import SearchBar from "../components/SearchBar";
+import ScreenHeader from "../components/ScreenHeader";
 
 const { width } = Dimensions.get("window");
 
@@ -30,7 +32,8 @@ const AccountDetails = () => {
     console.log(user)
     const userName = user.user.split('@')[0];
     return (
-      <View>
+      <View >
+        <ScreenHeader item={"My Profile"}/>
         <View style={{ padding: 20,flexDirection:"row",backgroundColor:"rgba(56, 199, 130, 1)" }}>
           {/* Title */}
           <Image

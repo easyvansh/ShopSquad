@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   bgContainer:{
     position:'absolute',
     flex:1,
-    top:-200,
+    top:-100,
     zIndex:-1,
     paddingLeft:200,
   },

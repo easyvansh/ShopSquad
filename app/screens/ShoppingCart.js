@@ -20,6 +20,7 @@ import { ActivityIndicator } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { selectUserRef } from "../store/userSlice";
 import { useNavigation } from "@react-navigation/native";
+import BgEllipse from "./Login/bgEllipse";
 
 const { height,width } = Dimensions.get("window");
 
@@ -156,7 +157,10 @@ const ShoppingCart = () => {
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: 20, color: "grey" }}>Cart is Empty.</Text>
+          <BgEllipse />
+      <Text style={{ fontSize: 24,fontWeight:"600", color: "white", padding: 12 }}>
+      Cart is Empty.
+      </Text>
         </View>
       </>
     );
@@ -165,6 +169,7 @@ const ShoppingCart = () => {
     // if(!cartItems){
     return (
       <>
+          <BgEllipse />
         <FlatList
           data={cartItems}
           renderItem={({ item }) => <CartListItem cartItem={item} />}

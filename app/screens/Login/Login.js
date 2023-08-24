@@ -21,14 +21,35 @@ import Svg, {
   Image as SvgImage,
 } from "react-native-svg";
 import { Dimensions } from "react-native";
+import { useCreateCartMutation } from "../../store/apiSlice";
 
 const { height, width } = Dimensions.get("window");
 
 function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("cd@email.com");
+  const [password, setPassword] = useState("123456");
   const [error, setError] = useState(null);
+  const [createCart] = useCreateCartMutation();
+  const onCreateCart = async () =>{
 
+    const result = await createCart({
+      customer: {
+        uid: user.uid,
+      },
+    });
+    if (result.data?.status === "OK") {
+      Alert.alert(
+        "Cart has been submitted",
+        `Your order reference is: ${result.data.data.ref}`
+        );
+        
+        console.log(
+          "Order has been submitted",
+          `Your order reference is: ${result.data.data.ref}`
+          );
+  //   dispatch(cartSlice.actions.clear());
+  }
+}
   const loginUser = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -37,6 +58,7 @@ function Login({ navigation }) {
       console.log(email);
       console.log(password);
       console.log(user.uid);
+      onCreateCart();
 
       navigation.replace("Home");
     } catch (error) {
@@ -69,27 +91,6 @@ function Login({ navigation }) {
           <SvgPath d="M 31 31 C 37.90625 31 43.5 25.40625 43.5 18.5 C 43.5 11.59374809265137 37.90625 6 31 6 C 24.09374809265137 6 18.5 11.59374809265137 18.5 18.5 C 18.5 25.40625 24.09374809265137 31 31 31 Z M 31 37.25 C 22.65624809265137 37.25 6 41.4375 6 49.74999618530273 L 6 55.99999618530273 L 55.99999618530273 55.99999618530273 L 55.99999618530273 49.74999618530273 C 55.99999618530273 41.4375 39.34375 37.25 31 37.25 Z" />
         </Svg>
       </View>
-
-      {/* <TextInput
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          placeholder="Enter email address"
-          autoCapitalize="none"
-          style={styles.emailAddress}
-          placeholderTextColor="rgba(255, 255, 255, 1)"
-          underlineColorAndroid="transparent"
-        />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          autoCapitalize="none"
-          placeholderTextColor="rgba(255, 255, 255, 1)"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
-          style={styles.password}
-        /> */}
       <View style={styles.inputContainer}>
         <TextInput
           value={email}
@@ -125,16 +126,8 @@ function Login({ navigation }) {
       {error && <Text style={styles.error}>{error}</Text>}
       <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
         <Text style={styles.link}>Forgot Password?</Text>
-      </Pressable>
+      </Pressable> 
       </View>
-      {/* <TouchableOpacity
-        style={styles.signInButton}
-        onPress={loginUser}
-        disabled={!email || !password}
-        >
-        <Text style={styles.signInText}>Log In</Text>
-      </TouchableOpacity>
-*/}
       <View style={styles.signUpWithContainer}>
         <Text style={styles.signUpWith}>Sign In With</Text>
         <View style={styles.logoContainer}>
@@ -158,19 +151,10 @@ function Login({ navigation }) {
         <View style={styles.orSignUpWithContainer}>
         <Text style={styles.orSignUp}>Don't have an account?</Text>
         </View> 
-        <View style={[styles.buttonContainer,{width:width*0.25,height:height*0.08,marginTop:80}]}>
-          <TouchableOpacity
-            style={[styles.rectangleButton,{width:width*0.25,height:height*0.08}]}
+          <Pressable
             onPress={() => navigation.navigate("Signup")}>
-            <Text style={styles.signUp}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <Pressable
-          style={styles.signUpButton}
-          onPress={() => navigation.navigate("Signup")}
-        >
-          <Text style={styles.signUpText}>Sign Up</Text>
-        </Pressable> */}
+            <Text style={styles.link}>Sign Up</Text>
+          </Pressable>
 
 
       </View>
@@ -180,17 +164,6 @@ function Login({ navigation }) {
           source={require("./shopsquadlogo.png")}
         />
       </View>
-
-      {/* <View style={styles.socialButtonsContainer}>
-        <Image
-          source={require("./facebooklogo.png")}
-          style={styles.socialLogo}
-          />
-        <Image
-          source={require("./googlelogo.png")}
-          style={styles.socialLogo}
-          />
-      </View>*/}
     </View>
   );
 }
@@ -198,7 +171,6 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
     backgroundColor: "white",
@@ -279,10 +251,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: width / 2,
     shadowColor: "black",
     shadowOpacity: 0.9,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 50,
-    // },
     shadowRadius: 0,
     elevation: 2,
   },
@@ -366,12 +334,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   shopSquadLogoContainer: {
-    position: "relative",
+    position: "absolute",
     height: width * 0.4,
-    top: -width * 0.1,
     width: width,
     left: 0,
-    bottom: 0,
+    bottom: 20,
   },
   shopSquadLogo: {
     height: width * 0.35,

@@ -13,12 +13,12 @@ import { useNavigation } from "@react-navigation/native";
 import { cartSlice } from "../store/cartSlice";
 import { useGetProductQuery } from "../store/apiSlice";
 import { ActivityIndicator } from "react-native";
-
 const { width } = Dimensions.get("window");
 
 const ProductDetails = ({route}) => {
   const id = route.params.id
   const { data, error, isLoading } = useGetProductQuery(id);
+  
   // const product = useSelector((state) => state.products.selectedProduct);
 
   const navigation = useNavigation();

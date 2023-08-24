@@ -29,12 +29,11 @@ import Svg, {
 
 const { height, width } = Dimensions.get("window");
 
-
 function Signup({ navigation }) {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [createUser] = useCreateUserMutation();
@@ -47,31 +46,32 @@ function Signup({ navigation }) {
     try {
       if (password === confirmPassword) {
         await createUserWithEmailAndPassword(auth, email, password);
-        console.log('User successfully signed up!');
-        console.log('Full Name:', fullName);
-        console.log('Email:', email);
-        console.log('Password:', password);
+        console.log("User successfully signed up!");
+        console.log("Full Name:", fullName);
+        console.log("Email:", email);
+        console.log("Password:", password);
         // If account ok -> create the user on the database
         onCreateUser();
-        navigation.replace('Home');
+        navigation.replace("Home");
       } else {
         setError("Passwords don't match");
       }
     } catch (error) {
-      console.error('Sign-up error:', error.code, error.message);
-      if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
-        setError('Your email or password was incorrect');
-      } else if (error.code === 'auth/email-already-in-use') {
-        setError('An account with this email already exists');
-      } else if (error.code === 'auth/weak-password') {
-        setError('Password should be at least 6 characters');
+      console.error("Sign-up error:", error.code, error.message);
+      if (
+        error.code === "auth/invalid-email" ||
+        error.code === "auth/wrong-password"
+      ) {
+        setError("Your email or password was incorrect");
+      } else if (error.code === "auth/email-already-in-use") {
+        setError("An account with this email already exists");
+      } else if (error.code === "auth/weak-password") {
+        setError("Password should be at least 6 characters");
       } else {
-        setError('There was a problem creating your account');
+        setError("There was a problem creating your account");
       }
     }
   };
-
-  const dispatch = useDispatch();
 
   const onCreateUser = async () => {
     const user = auth.currentUser;
@@ -89,9 +89,9 @@ function Signup({ navigation }) {
       Alert.alert(
         "User has been Created",
         `Your User reference is: ${result.data.data.ref}`
-        );
-        }
-      };
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    top:0,
+    top: 0,
     paddingHorizontal: 20,
     backgroundColor: "white",
   },
@@ -377,8 +377,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontStyle: "normal",
     textAlign: "left",
-    top: 0,
-    marginTop: 0,
+    top: 100,
+    marginTop: 10,
   },
   logoContainer: {
     flexDirection: "row",
