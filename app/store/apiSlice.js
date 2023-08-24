@@ -30,6 +30,24 @@ export const apiSlice = createApi({
     getOrder: builder.query({
       query: (ref) => `orders/${ref}`,
     }),
+    // Create Cart
+    createCart: builder.mutation({
+      query: (newCart) => ({
+        url: "cart",
+        method: "POST",
+        body: newCart,
+      }),
+    }),
+    getCart: builder.query({
+      query: (ref) => `cart/${ref}`,
+    }),
+    clearCart: builder.mutation({
+      query: (cart) => ({
+        url: `cart/${ref}/clear`,
+        method: "DELETE",
+        body: cart,
+      }),
+    }),
     // Create User
     createUser: builder.mutation({
       query: (newUser) => ({
@@ -56,10 +74,17 @@ export const apiSlice = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useGetBannersQuery,
+  // Products
   useGetProductsQuery,
   useGetProductQuery,
+  // Order
   useCreateOrderMutation,
   useGetOrderQuery,
+  // Cart
+  useCreateCartMutation,
+  useGetCartQuery,
+  useClearCartMutation,
+  // Payment
   useCreatePaymentIntentMutation,
   // user
   useCreateUserMutation,

@@ -23,10 +23,6 @@ export const cartSlice = createSlice({
         state.items.push({ id: newProductId, product: newProductData, quantity: 1 });
     }
   },
-  addUserToCart: (state, action) => {
-    const newProductUser = action.payload.user;
-    state.userRef = newProductUser;
-  },
   changeQuantity: (state, action) => {
     const {productId,amount } = action.payload;
     const cartItem = state.items.find((item) => item.id === productId)
