@@ -27,15 +27,16 @@ const AppStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: true }}
     >
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-      <Stack.Screen name="Signup" component={Signup}options={{ headerShown: false }}  />
+      <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}  />
       <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
       <Stack.Screen
         name="Home"
         component={AppDrawer}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Product Details"
@@ -54,9 +55,9 @@ const AppStack = ({ navigation }) => {
           ),
         })}
       />
-      <Stack.Screen name="Account Info" component={AccountDetails} />
-      <Stack.Screen name="Cart" component={ShoppingCart} />
-      <Stack.Screen name="Track Order" component={TrackOrder} />
+      <Stack.Screen name="My Profile" component={AccountDetails} options={{ headerShown: true }}/>
+      <Stack.Screen name="Cart" component={ShoppingCart} options={{ headerShown: true }} />
+      <Stack.Screen name="Track Order" component={TrackOrder} options={{ headerShown: true }}/>
     </Stack.Navigator>
   );
 };

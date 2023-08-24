@@ -24,7 +24,7 @@ const AppDrawer = ({ navigation }) => {
       initialRouteName="Home"
       drawerContent={props => <CustomDrawer {...props}/>}
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         drawerActiveBackgroundColor: "rgba(56, 199, 130, 1)",
         drawerActiveTintColor: "rgba(255, 255, 255, 1)",
         drawerInactiveTintColor: "#333",
